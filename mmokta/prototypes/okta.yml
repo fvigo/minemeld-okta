@@ -1,0 +1,28 @@
+url: https://github.com/fvigo/minemeld-okta
+description: >
+  Okta Module for MineMeld
+
+prototypes:
+  ipset_output:
+    author: Francesco Vigo - Palo Alto Networks
+    class: mmokta.OktaOutput
+    development_status: EXPERIMENTAL
+    node_type: output
+    indicator_types:
+      - any
+    tags:
+      - extension
+      - okta
+      - user-id
+      - remediation
+    description: >
+      Output Node for Okta for user remediation use case. Create a new prototype based on this and specify
+      okta_base_url, token and quarantine_group
+
+    config:
+      # Quarantine Griup
+      quarantine_group: your_quarantine_group_name
+      # Okta Endpoint
+      okta_base_url: your_okta_insance.okta.com
+      okta_token: your_okta_token
+

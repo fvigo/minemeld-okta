@@ -1,0 +1,16 @@
+{
+    "version": "0.1",
+    "name": "minemeld-okta",
+    "author": "Francesco Vigo",
+    "author_email": "fvigo@paloaltonetworks.com",
+    "description": "Okta Module for Minemeld",
+    "entry_points": {
+        "minemeld_nodes": {
+            "mmokta.OktaOutput": "mmokta.node:OktaOutput"
+        },
+        "minemeld_prototypes": {
+            "mmokta.prototypes": "mmokta:prototypes"
+        }
+    },
+    "manifest_version": 0
+}
