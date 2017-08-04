@@ -16,7 +16,6 @@ try:
 except ImportError as e:
     LOG.error("Import error!")
     LOG.debug('%s', e)
-    exit()
 
 
 if __name__ == "__main__":
@@ -43,7 +42,7 @@ if __name__ == "__main__":
         group2 = sys.argv[3]
 
     if(okta_org_url == '') or (okta_token == ''):
-        raise Exception('Cannot read OKTA URL and Token from configuration')
+        raise RuntimeError('Cannot read OKTA URL and Token from configuration')
 
     # Okta Endpoint information
     oktatarget = {
@@ -77,3 +76,4 @@ if __name__ == "__main__":
     LOG.info('All tests were successful!')
     print 'All tests were successful!'
     exit()
+

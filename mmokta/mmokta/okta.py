@@ -15,7 +15,7 @@ def lookup_user(oktatarget, user):
 
     url = "https://" +  oktatarget['addr'] + url_userlookup + user
 
-    LOG.debug('Invoking URL %s for user lookup' % url)
+    LOG.debug('{} - Invoking URL {} for user lookup'.format(self.name, url))
 
     # Set proper headers
     headers = {"Content-Type":"application/json","Accept":"application/json", "Authorization":"SSWS " + oktatarget['token']}
@@ -24,17 +24,16 @@ def lookup_user(oktatarget, user):
 
     # Check for HTTP codes other than 200
     if response.status_code != 200:
-        raise Exception('API Error! Status:', response.status_code, 'Headers:', response.headers, 'Error Response:',response.json())
-        exit()
+        raise RuntimeError('{} - API Error! Status: {} Headers: {} Error Response: {}'.format(self.name, response.status_code, response.headers,response.json())
 
-    LOG.debug('Performed user lookup for user ' + user + '!')
+    LOG.debug('{} - Performed user lookup for user {} !'.format(self.name, user))
 
     # Decode the JSON response into a dictionary and use the data
     data = response.json()
 
     userid = data['id']
 
-    LOG.debug('User ' + user + ' OKTA ID is ' + userid)
+    LOG.debug('{} - User {} OKTA ID is: {}'.format(self.name, user, userid)))
 
     return userid
 
@@ -46,7 +45,7 @@ def lookup_group(oktatarget, group):
     # Lookup the group
     url = "https://" +  oktatarget['addr'] + url_grouplookup + group + '&limit=2'
 
-    LOG.debug('Invoking URL %s for group lookup' % url)
+    LOG.debug('{} - Invoking URL {} for group lookup'.format(self.name,url))
 
     # Set proper headers
     headers = {"Content-Type":"application/json","Accept":"application/json", "Authorization":"SSWS " + oktatarget['token']}
@@ -55,22 +54,20 @@ def lookup_group(oktatarget, group):
 
     # Check for HTTP codes other than 200
     if response.status_code != 200:
-        raise Exception('API Error! Status:', response.status_code, 'Headers:', response.headers, 'Error Response:',response.json())
-        exit()
+        raise RuntimeError('{} - API Error! Status: {} Headers: {} Error Response: {}'.format(self.name, response.status_code, response.headers,response.json()))
 
-    LOG.debug('Performed group lookup for group ' + group + '!')
+    LOG.debug('{} - Performed group lookup for group {} !'.format(self.name,group))
 
     # Decode the JSON response into a dictionary and use the data
     data = response.json()
 
-    #print 'Returned %d entries!' % len(data)
-
+    # TODO: define a logic to support multiple groups starting with the same name
     if(len(data) != 1):
-    	raise Exception('Group search for %s did not return exactly one entry (%d):  please refine the query!' % (group, len(data)))
+    	raise RuntimeError('{} - Group search for {} did not return exactly one entry ({}): please refine the query!'.format(self.name, group, len(data)))
 
     groupid = data[0]['id']
 
-    LOG.debug('Group ' + group + ' OKTA ID is ' + groupid)
+    LOG.debug('{} - Group {} OKTA ID is: {}'.format(self.name,groupid))
 
     return groupid
 
@@ -82,7 +79,7 @@ def add_user_to_group(oktatarget, userid, groupid):
 
     url = "https://" +  oktatarget['addr'] + url_groupchange + '/' + groupid + '/users/' + userid
 
-    LOG.debug('Invoking HTTP PUT on URL %s for group assignment' % url)
+    LOG.debug('{} - Invoking HTTP PUT on URL {} for group assignment'.format(self.name,url))
 
     # Set proper headers
     headers = {"Content-Type":"application/json","Accept":"application/json", "Authorization":"SSWS " + oktatarget['token']}
@@ -91,10 +88,9 @@ def add_user_to_group(oktatarget, userid, groupid):
 
     # Check for HTTP codes other than 204
     if response.status_code != 204:
-        raise Exception('API Error! Status:', response.status_code, 'Headers:', response.headers, 'Error Response:',response.json())
-        exit()
+        raise RuntimeError('{} API Error! Status: {} Headers: {} Error Response: {}'.format(self.name, response.status_code, response.headers,response.json()))
 
-    LOG.debug('Added user  %s to group %s!' % (userid, groupid))
+    LOG.debug('{} - Added user {} to group {}!'.format(self.name, userid, groupid))
 
 
 # Remove an Okta user from an Okta group
@@ -104,7 +100,7 @@ def remove_user_from_group(oktatarget, userid, groupid):
     # Lookup the group
     url = "https://" +  oktatarget['addr'] + url_groupchange + '/' + groupid + '/users/' + userid
 
-    LOG.debug('Invoking HTTP DELETE on URL %s for group unassignment' % url)
+    LOG.debug('{} - Invoking HTTP DELETE on URL {} for group unassignment'.format(self.name, url))
 
     # Set proper headers
     headers = {"Content-Type":"application/json","Accept":"application/json", "Authorization":"SSWS " + oktatarget['token']}
@@ -113,10 +109,9 @@ def remove_user_from_group(oktatarget, userid, groupid):
 
     # Check for HTTP codes other than 204
     if response.status_code != 204:
-        raise Exception('API Error! Status:', response.status_code, 'Headers:', response.headers, 'Error Response:',response.json())
-        exit()
+        raise RuntimeError('{} API Error! Status: {} Headers: {} Error Response: {}'.format(self.name, response.status_code, response.headers,response.json()))
 
-    LOG.debug('Removed user %s from group %s!' % (userid, groupid))
+    LOG.debug('{} - Removed user {} from group {}!'.format(self.name, userid, groupid))
 
 # Look up user and group and add user to group
 def lookup_and_add(oktatarget, user, group):

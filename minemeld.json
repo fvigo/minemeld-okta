@@ -5,6 +5,9 @@
     "author_email": "fvigo@paloaltonetworks.com",
     "description": "Okta Module for Minemeld",
     "entry_points": {
+	"minemeld_webui": {
+            "mmoktaWebui" : "mmokta:webui_blueprint"
+        },
         "minemeld_nodes": {
             "mmokta.OktaOutput": "mmokta.node:OktaOutput"
         },

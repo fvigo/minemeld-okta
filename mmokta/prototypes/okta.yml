@@ -3,7 +3,7 @@ description: >
   Okta Module for MineMeld
 
 prototypes:
-  ipset_output:
+  user_output:
     author: Francesco Vigo - Palo Alto Networks
     class: mmokta.OktaOutput
     development_status: EXPERIMENTAL
@@ -20,7 +20,7 @@ prototypes:
       okta_base_url, token and quarantine_group
 
     config:
-      # Quarantine Griup
+      # Quarantine Group
       quarantine_group: your_quarantine_group_name
       # Okta Endpoint
       okta_base_url: your_okta_insance.okta.com
