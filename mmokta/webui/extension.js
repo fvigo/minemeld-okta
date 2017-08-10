@@ -28,13 +28,13 @@ function OKTASideConfigController($scope, MinemeldConfigService, MineMeldRunning
                 vm.okta_token = undefined;
             }
 
-            if (resul.okta_base_url) {
+            if (result.okta_base_url) {
                 vm.okta_base_url = result.okta_base_url;
             } else {
                 vm.okta_base_url = undefined;
             }
 
-            if (resul.quarantine_group) {
+            if (result.quarantine_group) {
                 vm.quarantine_group = result.quarantine_group;
             } else {
                 vm.quarantine_group = undefined;
@@ -74,7 +74,7 @@ function OKTASideConfigController($scope, MinemeldConfigService, MineMeldRunning
     vm.setOktaToken = function() {
         var mi = $modal.open({
             templateUrl: '/extensions/webui/mmoktaWebui/okta.output.key.html',
-            controller: ['$modalInstance', OKTAAutomationKeyController],
+            controller: ['$modalInstance', OKTAAuthTokenController],
             controllerAs: 'vm',
             bindToController: true,
             backdrop: 'static',
@@ -93,6 +93,56 @@ function OKTASideConfigController($scope, MinemeldConfigService, MineMeldRunning
             toastr.error('ERROR SETTING AUTOMATION KEY: ' + error.statusText);
         });
     };
+
+   vm.setBaseUrl = function() {
+        var mi = $modal.open({
+            templateUrl: '/extensions/webui/mmoktaWebui/okta.output.baseurl.html',
+            controller: ['$modalInstance', OKTABaseUrlController],
+            controllerAs: 'vm',
+            bindToController: true,
+            backdrop: 'static',
+            animation: false
+        });
+
+        mi.result.then((result) => {
+            vm.okta_base_url = result.okta_base_url;
+
+            return vm.saveSideConfig();
+        })
+        .then((result) => {
+            toastr.success('BASE URL SET');
+            vm.loadSideConfig();
+        }, (error) => {
+            toastr.error('ERROR SETTING BASE URL: ' + error.statusText);
+        });
+    };
+
+   vm.setQuarantineGroup = function() {
+
+        var mi = $modal.open({
+            templateUrl: '/extensions/webui/mmoktaWebui/okta.output.quarantinegroup.html',
+            controller: ['$modalInstance', OKTAQuarantineGroupController],
+            controllerAs: 'vm',
+            bindToController: true,
+            backdrop: 'static',
+            animation: false
+        });
+
+        mi.result.then((result) => {
+            vm.quarantine_group = result.quarantine_group;
+
+            return vm.saveSideConfig();
+        })
+        .then((result) => {
+            toastr.success('QUARANTINE GROUP SET');
+            vm.loadSideConfig();
+        }, (error) => {
+            toastr.error('ERROR SETTING QUARANTINE GROUP: ' + error.statusText);
+        });
+    };
+
+    vm.loadSideConfig();
+}
 
 function OKTAAuthTokenController($modalInstance) {
     var vm = this;
@@ -121,6 +171,58 @@ function OKTAAuthTokenController($modalInstance) {
         var result = {};
 
         result.okta_token = vm.okta_token2;
+
+        $modalInstance.close(result);
+    }
+
+    vm.cancel = function() {
+        $modalInstance.dismiss();
+    }
+}
+
+function OKTABaseUrlController($modalInstance) {
+    var vm = this;
+
+    vm.okta_base_url = undefined;
+    
+    vm.valid = function() {
+        if (!vm.okta_base_url) {
+            return false;
+        }
+
+        return true;
+    };
+
+    vm.save = function() {
+        var result = {};
+
+        result.okta_base_url = vm.okta_base_url
+
+        $modalInstance.close(result);
+    }
+
+    vm.cancel = function() {
+        $modalInstance.dismiss();
+    }
+}
+
+function OKTAQuarantineGroupController($modalInstance) {
+    var vm = this;
+
+    vm.quarantine_group = undefined;
+    
+    vm.valid = function() {
+        if (!vm.quarantine_group) {
+            return false;
+        }
+
+        return true;
+    };
+
+    vm.save = function() {
+        var result = {};
+
+        result.quarantine_group = vm.quarantine_group
 
         $modalInstance.close(result);
     }

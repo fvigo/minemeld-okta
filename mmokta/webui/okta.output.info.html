@@ -96,24 +96,24 @@
             <tbody>
                 <tr>
                     <td>BASE URL</td>
-                    <td tooltip="set key" class="nodedetail-info-clickable" ng-click="sideConfig.setBaseUrl()">
+                    <td tooltip="set base url" class="nodedetail-info-clickable" ng-click="sideConfig.setBaseUrl()">
                         <span ng-if="!sideConfig.okta_base_url"><em>Not set</em></span>
-                        <span ng-if="sideConfig.okta_base_url" class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                        <span ng-if="sideConfig.okta_base_url">{{ sideConfig.okta_base_url }}</span>
                     </td>
                 </tr>
                 <tr>            
                 <tr>
-                    <td>AUTH TOKEN</td>
-                    <td tooltip="set key" class="nodedetail-info-clickable" ng-click="sideConfig.setAutomationKey()">
+                    <td>OKTA TOKEN</td>
+                    <td tooltip="set okta token" class="nodedetail-info-clickable" ng-click="sideConfig.setOktaToken()">
                         <span ng-if="!sideConfig.okta_token"><em>Not set</em></span>
-                        <span ng-if="sideConfig.okta_token" class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                        <span ng-if="sideConfig.okta_token" class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true">
                     </td>
                 </tr>
                 <tr>
                     <td>QUARANTINE GROUP</td>
-                    <td tooltip="set key" class="nodedetail-info-clickable" ng-click="sideConfig.setQuarantineGroup()">
+                    <td tooltip="set quarantine group" class="nodedetail-info-clickable" ng-click="sideConfig.setQuarantineGroup()">
                         <span ng-if="!sideConfig.quarantine_group"><em>Not set</em></span>
-                        <span ng-if="sideConfig.quarantine_group" class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                        <span ng-if="sideConfig.quarantine_group">{{ sideConfig.quarantine_group }}</span></span></span>
                     </td>
                 </tr>
             </tbody>

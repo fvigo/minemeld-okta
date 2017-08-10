@@ -20,9 +20,7 @@ prototypes:
       okta_base_url, token and quarantine_group
 
     config:
-      # Quarantine Group
-      quarantine_group: your_quarantine_group_name
-      # Okta Endpoint
-      okta_base_url: your_okta_insance.okta.com
-      okta_token: your_okta_token
+      # Domain Map
+      domain_map: your_domain_map
+
 
