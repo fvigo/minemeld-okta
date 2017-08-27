@@ -1,3 +1,4 @@
+from __future__ import print_function
 import logging
 import os
 import sys
@@ -9,7 +10,7 @@ logging.basicConfig(filename='/tmp/mmokta.log',level=logging.DEBUG)
 LOG = logging.getLogger(__name__)
 
 
-# Workaround to allow testing
+# Workaround to allow testing from parent dir
 PACKAGE_PARENT = '..'
 SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
 sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
@@ -74,6 +75,6 @@ if __name__ == "__main__":
     t = testclass()
     t.run_test()
 
-    print 'All tests were successful!'
+    print('All tests were successful!')
     exit()
 

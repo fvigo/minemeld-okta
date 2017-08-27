@@ -113,9 +113,33 @@
                     <td>QUARANTINE GROUP</td>
                     <td tooltip="set quarantine group" class="nodedetail-info-clickable" ng-click="sideConfig.setQuarantineGroup()">
                         <span ng-if="!sideConfig.quarantine_group"><em>Not set</em></span>
-                        <span ng-if="sideConfig.quarantine_group">{{ sideConfig.quarantine_group }}</span></span></span>
+                        <span ng-if="sideConfig.quarantine_group">{{ sideConfig.quarantine_group }}</span>
                     </td>
                 </tr>
+                <tr>
+                    <td>SUSPEND USER</td>
+                    <td tooltip="suspend user" class="nodedetail-info-clickable" ng-click="sideConfig.toggleSuspendUser()">
+                        <span ng-if="sideConfig.suspend_user === undefined"><em>Not set (default disabled)</em></span>
+                        <span ng-if="sideConfig.suspend_user !== undefined && !sideConfig.suspend_user" class="label label-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
+                        <span ng-if="sideConfig.suspend_user" class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                    </td>                    
+                </tr>
+                <tr>
+                    <td>UNSUSPEND USER</td>
+                    <td tooltip="unsuspend user" class="nodedetail-info-clickable" ng-click="sideConfig.toggleUnsuspendUser()">
+                        <span ng-if="sideConfig.unsuspend_user === undefined"><em>Not set (default disabled)</em></span>
+                        <span ng-if="sideConfig.unsuspend_user !== undefined && !sideConfig.unsuspend_user" class="label label-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
+                        <span ng-if="sideConfig.unsuspend_user" class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                    </td>                    
+                </tr>
+                <tr>
+                    <td>CLEAR USER SESSIONS</td>
+                    <td tooltip="clear user sessions" class="nodedetail-info-clickable" ng-click="sideConfig.toggleClearUserSessions()">
+                        <span ng-if="sideConfig.clear_user_sessions === undefined"><em>Not set (default disabled)</em></span>
+                        <span ng-if="sideConfig.clear_user_sessions !== undefined && !sideConfig.clear_user_sessions" class="label label-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
+                        <span ng-if="sideConfig.clear_user_sessions" class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                    </td>
+                </tr>                
             </tbody>
         </table>
     </div>

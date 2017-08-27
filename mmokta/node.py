@@ -47,6 +47,15 @@ class OktaOutput(ActorBaseFT):
         # Okta Group name (not ID) to assign users to
         self.quarantine_group = sconfig.get('quarantine_group', None)
 
+        # Okta Suspend User
+        self.suspend_user = sconfig.get('suspend_user', None)
+
+        # Okta Unsuspend User when indicator is withdrawn
+        self.unsuspend_user = sconfig.get('unsuspend_user', None)
+
+        # Okta Clear User Sessions
+        self.clear_user_sessions = sconfig.get('clear_user_sessions', None)
+
     def hup(self, source=None):
         LOG.info('{} - hup received, reload side config'.format(self.name))
         self._load_side_config()
@@ -54,28 +63,56 @@ class OktaOutput(ActorBaseFT):
 
     @base._counting('update.processed')
     def filtered_update(self, source=None, indicator=None, value=None):
-        if self.oktatarget.token is None:
+        if self.oktatarget['token'] is None:
             raise RuntimeError('{} - OKTA Auth Token not set'.format(self.name))
 
-        if self.oktatarget.addr is None:
+        if self.oktatarget['addr'] is None:
             raise RuntimeError('{} - OKTA Base URL not set'.format(self.name))
 
-        if self.quarantine_group is None:
-            raise RuntimeError('{} - Quarantine Group not set'.format(self.name))
+        # Work exclusively with user-id indicators
+        if(value['type'] != 'user-id'):
+            LOG.debug('{} - Received Indicator of type {}, expecting user-id, skipping'.format(self.name, value['type']))
+            return
 
-        if(value['type'] == 'user-id'):
-            okta.lookup_and_add(self.oktatarget, indicator, self.quarantine_group)
+        # Lookup user
+        user = okta.lookup_user(self.oktatarget, indicator)
+
+        # Add user to Group
+        if self.quarantine_group is not None:
+            groupid = okta.lookup_group(self.oktatarget, self.quarantine_group)
+            okta.add_user_to_group(self.oktatarget, user, groupid)
+
+        # Suspend user
+        if self.suspend_user is not None:
+            okta.suspend_user(self.oktatarget, user)
+
+        # Clear user sessions
+        if self.clear_user_sessions is not None:
+            okta.clear_user_sessions(self.oktatarget, user)
 
     @base._counting('withdraw.processed')
     def filtered_withdraw(self, source=None, indicator=None, value=None):
-        if self.oktatarget.token is None:
+        if self.oktatarget['token'] is None:
             raise RuntimeError('{} - OKTA Auth Token not set'.format(self.name))
 
-        if self.oktatarget.addr is None:
+        if self.oktatarget['addr'] is None:
             raise RuntimeError('{} - OKTA Base URL not set'.format(self.name))
 
-        if self.quarantine_group is None:
-            raise RuntimeError('{} - Quarantine Group not set'.format(self.name))
+        # Work exclusively with user-id indicators
+        if(value['type'] != 'user-id'):
+            LOG.debug('{} - Received Indicator of type {}, expecting user-id, skipping'.format(self.name, value['type']))
+            return
 
-        if(value['type'] == 'user-id'):
-            okta.lookup_and_remove(self.oktatarget, indicator, self.quarantine_group)
+        # Lookup user
+        user = okta.lookup_user(self.oktatarget, indicator)
+
+        # Remove user from  Group
+        if self.quarantine_group is not None:
+            groupid = okta.lookup_group(self.oktatarget, self.quarantine_group)
+            okta.remove_user_from_group(self.oktatarget, user, groupid)
+
+       # UnSuspend user
+        if self.unsuspend_user is not None:
+            okta.unsuspend_user(self.oktatarget, user)
+
+    

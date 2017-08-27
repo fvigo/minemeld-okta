@@ -1,7 +1,9 @@
+from __future__ import print_function
 import logging
 import os
 import sys
 import json
+
 
 logging.basicConfig(filename='/tmp/mmokta.log',level=logging.DEBUG)
 LOG = logging.getLogger(__name__)
@@ -73,7 +75,17 @@ if __name__ == "__main__":
     okta.lookup_and_remove(oktatarget, user, group2)
     LOG.info('Looked up and removed user %s from group %s' % (user, group2))
 
+    okta.lookup_and_clear_user_sessions(oktatarget, user)
+    LOG.info('Cleared sessions for user %s' % user)
+
+    okta.lookup_and_suspend_user(oktatarget, user)
+    LOG.info('Suspended user %s' % user)
+
+    okta.lookup_and_unsuspend_user(oktatarget, user)
+    LOG.info('Unsuspended user %s' % user)
+
     LOG.info('All tests were successful!')
-    print 'All tests were successful!'
+
+    print('All tests were successful!')
     exit()
 
