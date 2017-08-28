@@ -3,7 +3,7 @@
     "name": "minemeld-okta",
     "author": "Francesco Vigo",
     "author_email": "fvigo@paloaltonetworks.com",
-    "description": "Okta Module for Minemeld",
+    "description": "MineMeld Extension for Okta",
     "entry_points": {
 	"minemeld_webui": {
             "mmoktaWebui" : "mmokta:webui_blueprint"
