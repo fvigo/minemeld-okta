@@ -16,8 +16,7 @@ prototypes:
       - user-id
       - remediation
     description: >
-      Output Node for Okta for user remediation use case. Create a new prototype based on this and specify
-      okta_base_url, token and quarantine_group
+      Output Node for Okta for user remediation use case. Parameters can be configured through the WebUI. Domain_Map is still not fully implemented.
 
     config:
       # Domain Map
