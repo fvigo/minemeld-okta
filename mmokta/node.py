@@ -83,11 +83,11 @@ class OktaOutput(ActorBaseFT):
             okta.add_user_to_group(self.oktatarget, user, groupid)
 
         # Suspend user
-        if self.suspend_user is not None:
+        if self.suspend_user is not None and self.suspend_user is True:
             okta.suspend_user(self.oktatarget, user)
 
         # Clear user sessions
-        if self.clear_user_sessions is not None:
+        if self.clear_user_sessions is not None and self.clear_user_sessions is True:
             okta.clear_user_sessions(self.oktatarget, user)
 
     @base._counting('withdraw.processed')
@@ -112,7 +112,7 @@ class OktaOutput(ActorBaseFT):
             okta.remove_user_from_group(self.oktatarget, user, groupid)
 
        # UnSuspend user
-        if self.unsuspend_user is not None:
+        if self.unsuspend_user is not None and self.unsuspend_user is True:
             okta.unsuspend_user(self.oktatarget, user)
 
     

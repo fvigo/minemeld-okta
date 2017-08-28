@@ -1,1 +1,3 @@
 testconfig.json
+*.pyc
+*.whl

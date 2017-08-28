@@ -75,7 +75,6 @@ function OKTASideConfigController($scope, MinemeldConfigService, MineMeldRunning
 
     vm.saveSideConfig = function() {
         var side_config = {};
-        var hup_node = undefined;
         var nodename = $scope.$parent.vm.nodename;
 
         if (vm.okta_token) {
@@ -104,7 +103,8 @@ function OKTASideConfigController($scope, MinemeldConfigService, MineMeldRunning
 
         return MinemeldConfigService.saveDataFile(
             nodename + '_side_config',
-            side_config
+            side_config,
+            nodename
         );
     };
 
