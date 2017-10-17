@@ -60,7 +60,7 @@ if __name__ == "__main__":
     LOG.info('Looked up group OKTA ID %s from group name %s' % (groupid1, group1))
 
     groupid2 = okta.lookup_group(oktatarget, group2)
-    LOG.info('Looked up group OKTA ID %s from group name %s' % (groupid1, group1))
+    LOG.info('Looked up group OKTA ID %s from group name %s' % (groupid2, group2))
 
     okta.add_user_to_group(oktatarget, userid, groupid1)
     LOG.info('Added user %s (OKTA ID %s) to group %s (OKTA ID %s)' % (user, userid, group1, groupid1))
