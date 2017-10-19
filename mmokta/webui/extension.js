@@ -85,7 +85,7 @@ function OKTASideConfigController($scope, MinemeldConfigService, MineMeldRunning
             side_config.okta_base_url = vm.okta_base_url;
         }
 
-        if (vm.okta_base_url) {
+        if (vm.quarantine_group) {
             side_config.quarantine_group = vm.quarantine_group;
         }
 
